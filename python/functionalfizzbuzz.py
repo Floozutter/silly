@@ -10,8 +10,8 @@ from typing import Callable, NamedTuple, List
 IntChecker = Callable[[int], bool]  # checks if an integer passes a condition
 IntNamer   = Callable[[int], str]   # names an integer by some rules
 class Rule(NamedTuple):             # associates a subname to a condition
-    condition: IntChecker
-    subname: str 
+    subname: str
+    condition: IntChecker 
 
 
 def make_namer(rules: List[Rule]) -> IntNamer:
@@ -45,8 +45,8 @@ def make_namer(rules: List[Rule]) -> IntNamer:
 if __name__ == "__main__":
     # make the classic FizzBizz namer
     fizzbuzz = make_namer([
-        Rule(lambda z: z % 3 == 0, "Fizz"),
-        Rule(lambda z: z % 5 == 0, "Buzz")
+        Rule("Fizz", lambda z: z % 3 == 0),
+        Rule("Buzz", lambda z: z % 5 == 0)
     ])
 
     # name the integers within the range [1, 100] with fizzbuzz, and print
