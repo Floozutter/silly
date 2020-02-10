@@ -5,7 +5,6 @@ Made for /r/badcode's Bad Code Coding Challenge #29.
 Link: https://www.reddit.com/r/badcode/comments/ew2nn2
 """
 
-
 morse = lambda code: "".join(
     map(
         lambda dits_and_dahs: {
