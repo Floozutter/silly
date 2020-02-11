@@ -62,10 +62,10 @@ def summerE(n: int) -> int:
     """
     def sum_multiples(divisor: int, terms: int) -> int:
         return divisor * (terms * (terms + 1)) // 2
-    fizzsum     = sum_multiples( 3, (n-1) //  3)
-    buzzsum     = sum_multiples( 5, (n-1) //  5)
-    fizzbuzzsum = sum_multiples(15, (n-1) // 15)
-    return fizzsum + buzzsum - fizzbuzzsum
+    fizzsum      = sum_multiples( 3, (n-1) //  3)
+    buzzsum      = sum_multiples( 5, (n-1) //  5)
+    intersectsum = sum_multiples(15, (n-1) // 15)
+    return fizzsum + buzzsum - intersectsum
 
 
 def parse_args() -> Tuple[int, int]:
