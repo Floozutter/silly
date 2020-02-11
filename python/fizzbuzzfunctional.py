@@ -27,7 +27,7 @@ def make_namer(rules: Iterable[Rule]) -> IntNamer:
     
     def namer(z: int) -> str:
         """
-        Names the integer argument using the bound List of Rules.
+        Names the integer argument using the bound Iterable of Rules.
         """
         # make the full name from the subnames the integer fulfills
         name = "".join(r.subname for r in rules if r.condition(z))
