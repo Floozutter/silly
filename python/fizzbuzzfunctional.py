@@ -49,5 +49,6 @@ if __name__ == "__main__":
         Rule("Buzz", lambda z: z % 5 == 0)
     ))
 
-    # name the integers within the range [1, 100] with fizzbuzz, and print
-    print("\n".join(map(fizzbuzz, range(1, 101))))
+    # name the integers within the range [1, 100] with fizzbuzz, then print
+    for name in map(fizzbuzz, range(1, 101)):
+        print(name)
