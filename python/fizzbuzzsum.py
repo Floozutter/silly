@@ -91,13 +91,13 @@ def compare_solutions(bound: int, trials: int) -> None:
     """
     Prints out the solutions' outputs and execution times.
     """
-    solutions = [
+    solutions = (
         Solution("Solution A", summerA),
         Solution("Solution B", summerB),
         Solution("Solution C", summerC),
         Solution("Solution D", summerD),
         Solution("Solution E", summerE)
-    ]
+    )
 
     print(f"Comparing solution outputs, using an upper bound of {bound}...")
     for sol in solutions:
