@@ -12,9 +12,9 @@ class Sbunction:
     Sbunctions are functions called with square brackets.
     """
     _func: Callable  # under-the-hood function to call
-    def __init__(self, func: Callable):
+    def __init__(self, func: Callable) -> None:
         self._func = func
-    def __getitem__(self, key: Union[Tuple, Any]):
+    def __getitem__(self, key: Union[Tuple, Any]) -> Any:
         """
         Handles passing the key argument to the under-the-hood function.
         Tuple arguments are always unpacked when passed.
@@ -26,13 +26,13 @@ class Sbfunction(Sbunction):
     """
     Sbfunctions are Sbunctions that can also be called with parentheses.
     """
-    def __init__(self, func: Callable):
+    def __init__(self, func: Callable) -> None:
         super().__init__(func)
-    def __call__(self, *args, **kwargs):
+    def __call__(self, *args, **kwargs) -> Any:
         return self._func(*args, **kwargs)
 
 
-def sbunction(func: Callable):
+def sbunction(func: Callable) -> Sbunction:
     """
     Decorator to make a Sbunction out of a normal ol' funcion.
     """
