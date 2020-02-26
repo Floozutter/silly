@@ -27,7 +27,7 @@ class Sbfunction(Sbunction):
     Sbfunctions are Sbunctions that can also be called with parentheses.
     """
     def __init__(self, func: Callable):
-        Sbunction.__init__(self, func)
+        super().__init__(func)
     def __call__(self, *args, **kwargs):
         return self._func(*args, **kwargs)
 
