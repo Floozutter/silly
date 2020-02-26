@@ -41,7 +41,7 @@ if __name__ == "__main__":
     assert add[1, 2] == 3
 
     @sbunction
-    def scale(vector: Tuple[int], scalar: int = 2) -> Tuple[int]:
+    def scale(vector: Tuple[int, ...], scalar: int = 2) -> Tuple[int, ...]:
         return tuple(i*scalar for i in vector)
     # Use a comma to avoid unpacking a single Tuple argument by itself!
     assert scale[(1, 2, 3),  ] == (2, 4, 6)
