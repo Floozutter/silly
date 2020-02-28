@@ -32,12 +32,12 @@ class Sbfunction(Sbunction):
         return self._func(*args, **kwargs)
 
 
+@Sbfunction
 def sbunction(func: Callable) -> Sbunction:
     """
     Decorator to make a Sbunction out of a normal ol' funcion.
     """
     return Sbunction(func)
-sbunction = Sbfunction(sbunction)
 
 
 if __name__ == "__main__":
