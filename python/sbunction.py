@@ -11,7 +11,7 @@ class Sblass(type):
     """
     Classes of Sblass can be called with square brackets.
     """
-    def __getitem__(self, key):
+    def __getitem__(self, key: Union[Tuple, Any]):
         """
         Passes the key argument to __call__.
         Tuple arguments are always unpacked when passed.
