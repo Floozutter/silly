@@ -11,7 +11,7 @@ TRUISHNAME = "Truish"  # Name of the Truish attribute of this module.
 TRUISHNESS = 0.75      # Probability of Truish being True
 
 # Names of public objects.
-__all__ = ["TRUISHNESS", "chance", TRUISHNAME]
+__all__ = ["TRUISHNESS", "chance"]
 
 
 # Helper function for evaluating the value of Truish.
