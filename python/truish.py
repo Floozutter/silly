@@ -25,6 +25,7 @@ def chance(truthrate: float) -> bool:
 def __getattr__(name: str) -> Any:
     if name == TRUISHNAME:
         return chance(TRUISHNESS)
+    raise AttributeError(f"module {__name__!r} has no attribute {name!r}")
     
 ## This module's __dir__.
 def __dir__() -> List[str]:
