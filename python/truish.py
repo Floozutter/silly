@@ -11,7 +11,7 @@ TRUISHNAME = "Truish"  # Name of the Truish attribute of this module.
 TRUISHNESS = 0.75      # Probability of Truish being True
 
 # Names of public objects.
-__all__ = ["TRUISHNESS", "chance"]
+__all__ = sorted([TRUISHNAME, "TRUISHNESS", "chance"])
 
 
 # Helper function for evaluating the value of Truish.
@@ -29,7 +29,7 @@ def __getattr__(name: str) -> Any:
     
 ## This module's __dir__.
 def __dir__() -> List[str]:
-    return sorted(__all__ + [TRUISHNAME])
+    return __all__
 
 
 # Driver for testing.
