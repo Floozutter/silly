@@ -8,7 +8,7 @@ from typing import Any, List
 
 # Global constants.
 TRUISHNAME = "Truish"  # Name of the Truish attribute of this module.
-TRUISHNESS = 0.75      # Probability of Truish being True
+TRUISHNESS = 0.75      # Probability of Truish being True.
 
 # Names of public objects.
 __all__ = ["TRUISHNAME", "TRUISHNESS", "chance"]
