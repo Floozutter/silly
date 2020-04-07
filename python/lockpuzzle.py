@@ -18,7 +18,7 @@ Combination = Tuple[int, int, int]
 
 def n_right_same_place(n: int, a: Combination, b: Combination) -> bool:
     digitpairs = zip(a, b)
-    matches = sum(1 for pair in digitpairs if pair[0] == pair[1])
+    matches = sum(1 for digit_a, digit_b in digitpairs if digit_a == digit_b)
     return matches == n
 
 def n_right_diff_place(n: int, a: Combination, b: Combination) -> bool:
@@ -29,7 +29,7 @@ def n_right_diff_place(n: int, a: Combination, b: Combination) -> bool:
     )
 
 def all_wrong(a: Combination, b: Combination) -> bool:
-    return len(set(a) & set(b)) == 0
+    return not (set(a) & set(b))
 
 
 def combinations() -> Generator[Combination, None, None]:
