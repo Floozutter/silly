@@ -1,5 +1,5 @@
 """
-A quick simulation of the Monty Hall problem in Python.
+A loose simulation of the Monty Hall problem in Python.
 """
 
 from random import randrange, sample
