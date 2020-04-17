@@ -16,5 +16,7 @@ def how_are_you(
     mood: Any,                               # Mood.
     is_actually_okay: bool = False           # :(
 ) -> str:
-    """Returns an answer to the question "How are you?" using your state."""
+    """
+    Returns an answer to the question "How are you?" using your current state.
+    """
     return "Okay."
