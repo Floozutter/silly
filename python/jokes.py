@@ -7,6 +7,7 @@ import functools
 from typing import AbstractSet, Mapping, Iterable, Any
 
 
+# A function that answers how you are.
 def how_are_you(
     health: int,                             # Integer because health/points/.
     hunger: int,                             # Is high hunger good or bad?
@@ -24,7 +25,12 @@ def how_are_you(
     return "Okay."
 
 
+# A random function, with a twist. (Read decorator last!)
 @functools.lru_cache(maxsize=1)
 def rand100() -> int:
     """Returns a random integer within [0, 100)."""
     return random.randrange(0, 100)
+
+# Another memoized random function, but as a one-liner.
+random.random = functools.lru_cache(maxsize=1)(random.random)
+
