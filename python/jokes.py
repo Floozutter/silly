@@ -19,9 +19,9 @@ random.random = functools.lru_cache(maxsize=1)(random.random)
 
 # SMH stands for SMH My Head.
 def smh(depth: int = 0) -> str:
-    """Expands SMH as many times as the depth argument."""
-    if depth <= 0: return "SMH"
-    else:          return smh(depth-1) + " My Head"
+    """Expands smh as many times as the depth argument."""
+    if depth <= 0: return "smh"
+    else:          return smh(depth-1) + " my head"
 
 
 # A function that answers how you are.
