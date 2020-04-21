@@ -7,6 +7,23 @@ import functools
 from typing import AbstractSet, Mapping, Iterable, Any
 
 
+# A random function, with a twist. (Read decorator last!)
+@functools.lru_cache(maxsize=1)
+def rand100() -> int:
+    """Returns a random integer within [0, 100)."""
+    return random.randrange(0, 100)
+
+# Another memoized random function, but as a one-liner.
+random.random = functools.lru_cache(maxsize=1)(random.random)
+
+
+# SMH stands for SMH My Head.
+def smh(depth: int = 0) -> str:
+    """Expands SMH as many times as the depth argument."""
+    if depth <= 0: return "SMH"
+    else:          return smh(depth-1) + " My Head"
+
+
 # A function that answers how you are.
 def how_are_you(
     health: int,                             # Integer because health/points/.
@@ -25,12 +42,5 @@ def how_are_you(
     return "Okay."
 
 
-# A random function, with a twist. (Read decorator last!)
-@functools.lru_cache(maxsize=1)
-def rand100() -> int:
-    """Returns a random integer within [0, 100)."""
-    return random.randrange(0, 100)
 
-# Another memoized random function, but as a one-liner.
-random.random = functools.lru_cache(maxsize=1)(random.random)
 
