@@ -19,6 +19,13 @@ def concat(a: str, b: str, separator: str = " ") -> str:
 # Function for converting integers to English number words.
 def numeralize(z: int) -> str:
     """Returns the integer argument as English number words."""
+    def divide_and_conquer(z: int, divisor: int, quotient_word: str) -> str:
+        """Helper function for the divmod-and-concat pattern."""
+        quotient, remainder = divmod(z, divisor)
+        return concat(
+            concat(numeralize(quotient), quotient_word),
+            numeralize(remainder)
+        )
     # Case for negatives.
     if z < 0:     return "negative " + numeralize(-z)
     # Case for zero.
@@ -57,19 +64,12 @@ def numeralize(z: int) -> str:
         return concat(numeralize(tens*10), numeralize(ones), "-")
     # Case for the hundreds.
     elif z < 1000:
-        hundreds, remainder = divmod(z, 100)
-        return concat(
-            concat(numeralize(hundreds), "hundred"),
-            numeralize(remainder)
-        )
+        return divide_and_conquer(z, 100, "hundred")
     # Case for the thousands.
     elif z < 1_000_000:
-        thousands, remainder = divmod(z, 1000)
-        return concat(
-            concat(numeralize(thousands), "thousand"),
-            numeralize(remainder)
-        )
-    raise NotImplementedError()
+        return divide_and_conquer(z, 1000, "thousand")
+    # Raise an exception for numbers without a case.
+    raise NotImplementedError("Sorry, I can't count that high.")
 
 # Helper function for converting numerals to valid attribute names.
 def attributify(numeral: str) -> str:
