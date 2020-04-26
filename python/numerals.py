@@ -62,12 +62,13 @@ def numeralize(z: int) -> str:
     elif z < 100:
         tens, ones = divmod(z, 10)
         return concat(numeralize(tens*10), numeralize(ones), "-")
-    # Case for the hundreds.
+    # Cases for divide-and-conquer.
     elif z < 1000:
         return divide_and_conquer(z, 100, "hundred")
-    # Case for the thousands.
     elif z < 1_000_000:
         return divide_and_conquer(z, 1000, "thousand")
+    elif z < 1_000_000_000:
+        return divide_and_conquer(z, 1_000_000, "million")
     # Raise an exception for numbers without a case.
     raise NotImplementedError("Sorry, I can't count that high.")
 
