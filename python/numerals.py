@@ -52,11 +52,11 @@ def numeralize(z: int) -> str:
     elif z == 70: return "seventy"
     elif z == 80: return "eighty"
     elif z == 90: return "ninety"
-    # Cases for numbers within [21, 100).
+    # Case for numbers within [21, 100).
     elif z < 100:
         tens, ones = divmod(z, 10)
         return concat(numeralize(tens*10), numeralize(ones), "-")
-    # Cases for numbers within [100, 1000).
+    # Case for numbers within [100, 1000).
     elif z < 1000:
         hundreds, remainder = divmod(z, 100)
         return concat(
