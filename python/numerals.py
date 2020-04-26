@@ -52,15 +52,21 @@ def numeralize(z: int) -> str:
     elif z == 70: return "seventy"
     elif z == 80: return "eighty"
     elif z == 90: return "ninety"
-    # Case for numbers within [21, 100).
     elif z < 100:
         tens, ones = divmod(z, 10)
         return concat(numeralize(tens*10), numeralize(ones), "-")
-    # Case for numbers within [100, 1000).
+    # Case for the hundreds.
     elif z < 1000:
         hundreds, remainder = divmod(z, 100)
         return concat(
             concat(numeralize(hundreds), "hundred"),
+            numeralize(remainder)
+        )
+    # Case for the thousands.
+    elif z < 1_000_000:
+        thousands, remainder = divmod(z, 1000)
+        return concat(
+            concat(numeralize(thousands), "thousand"),
             numeralize(remainder)
         )
     raise NotImplementedError()
