@@ -10,7 +10,13 @@ LOWERBOUND = -1000  # inclusive
 UPPERBOUND =  1001  # exclusive
 
 
-# Helper function for converting integers to English number words.
+# Helper function for concatenating English number words.
+def concat(a: str, b: str) -> str:
+    """Concatenates two English number words. Ignores a right-hand zero."""
+    if b == "zero": return a
+    else          : return a + " " + b
+
+# Function for converting integers to English number words.
 def numeralize(z: int) -> str:
     """Returns the integer argument as English number words."""
     if z < 0:    return "negative " + numeralize(-z)
