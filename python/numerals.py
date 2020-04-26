@@ -19,9 +19,11 @@ def concat(a: str, b: str) -> str:
 # Function for converting integers to English number words.
 def numeralize(z: int) -> str:
     """Returns the integer argument as English number words."""
-    if z < 0:    return "negative " + numeralize(-z)
-    # Cases for small numbers.
+    # Case for negatives.
+    if z < 0:     return "negative " + numeralize(-z)
+    # Case for zero.
     elif z ==  0: return "zero"
+    # Cases for small numbers.
     elif z ==  1: return "one"
     elif z ==  2: return "two"
     elif z ==  3: return "three"
