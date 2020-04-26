@@ -14,6 +14,7 @@ UPPERBOUND =  1001  # exclusive
 def numeralize(z: int) -> str:
     """Returns the integer argument as English number words."""
     if z < 0:    return "negative " + numeralize(-z)
+    # Cases for small numbers.
     elif z ==  0: return "zero"
     elif z ==  1: return "one"
     elif z ==  2: return "two"
@@ -34,6 +35,15 @@ def numeralize(z: int) -> str:
     elif z == 17: return "seventeen"
     elif z == 18: return "eighteen"
     elif z == 19: return "nineteen"
+    # Cases for the tens.
+    elif z == 20: return "twenty"
+    elif z == 30: return "thirty"
+    elif z == 40: return "forty"
+    elif z == 50: return "fifty"
+    elif z == 60: return "sixty"
+    elif z == 70: return "seventy"
+    elif z == 80: return "eighty"
+    elif z == 90: return "ninety"
     raise NotImplementedError()
 
 # Helper function for converting numerals to valid attribute names.
