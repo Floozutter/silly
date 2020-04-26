@@ -14,7 +14,26 @@ UPPERBOUND =  1001  # exclusive
 def numeralize(z: int) -> str:
     """Returns the integer argument as English number words."""
     if z < 0:    return "negative " + numeralize(-z)
-    elif z == 0: return "zero"
+    elif z ==  0: return "zero"
+    elif z ==  1: return "one"
+    elif z ==  2: return "two"
+    elif z ==  3: return "three"
+    elif z ==  4: return "four"
+    elif z ==  5: return "five"
+    elif z ==  6: return "six"
+    elif z ==  7: return "seven"
+    elif z ==  8: return "eight"
+    elif z ==  9: return "nine"
+    elif z == 10: return "ten"
+    elif z == 11: return "eleven"
+    elif z == 12: return "twelve"
+    elif z == 13: return "thirteen"
+    elif z == 14: return "fourteen"
+    elif z == 15: return "fifteen"
+    elif z == 16: return "sixteen"
+    elif z == 17: return "seventeen"
+    elif z == 18: return "eighteen"
+    elif z == 19: return "nineteen"
     raise NotImplementedError()
 
 # Helper function for converting numerals to valid attribute names.
