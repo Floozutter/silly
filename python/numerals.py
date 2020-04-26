@@ -56,6 +56,13 @@ def numeralize(z: int) -> str:
     elif z < 100:
         tens, ones = divmod(z, 10)
         return concat(numeralize(tens*10), numeralize(ones), "-")
+    # Cases for numbers within [100, 1000).
+    elif z < 1000:
+        hundreds, remainder = divmod(z, 100)
+        return concat(
+            concat(numeralize(hundreds), "hundred"),
+            numeralize(remainder)
+        )
     raise NotImplementedError()
 
 # Helper function for converting numerals to valid attribute names.
