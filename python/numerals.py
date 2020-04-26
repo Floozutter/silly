@@ -11,10 +11,10 @@ UPPERBOUND =  1001  # exclusive
 
 
 # Helper function for concatenating English number words.
-def concat(a: str, b: str) -> str:
+def concat(a: str, b: str, separator: str = " ") -> str:
     """Concatenates two English number words. Ignores a right-hand zero."""
     if b == "zero": return a
-    else          : return a + " " + b
+    else          : return a + separator + b
 
 # Function for converting integers to English number words.
 def numeralize(z: int) -> str:
@@ -52,6 +52,10 @@ def numeralize(z: int) -> str:
     elif z == 70: return "seventy"
     elif z == 80: return "eighty"
     elif z == 90: return "ninety"
+    # Cases for numbers within [21, 100).
+    elif z < 100:
+        tens, ones = divmod(z, 10)
+        return concat(numeralize(tens*10), numeralize(ones), "-")
     raise NotImplementedError()
 
 # Helper function for converting numerals to valid attribute names.
