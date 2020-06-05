@@ -24,7 +24,7 @@ class Sbunction(metaclass=Sblass):
     """
     Sbunctions are functions called with square brackets.
     """
-    _func: Callable  # Under-the-hood callback function.
+    _func: Callable  # Under-the-hood callback.
     def __init__(self, func: Callable) -> None:
         self._func = func
         update_wrapper(self, self._func)
