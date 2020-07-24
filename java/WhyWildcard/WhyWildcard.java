@@ -14,7 +14,6 @@ public class WhyWildcard {
 			new Mage("Twisted Fate")
 		);
 		introduce(partyB, "Mid Laners");
-		
 	}
 	
 	private static void introduce(
