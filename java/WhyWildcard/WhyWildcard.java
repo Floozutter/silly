@@ -18,8 +18,8 @@ public class WhyWildcard {
 	}
 	
 	private static void introduce(
-			List<? extends Adventurer> party,  // Try using List<Adventurer>!
-			String partyName
+		List<? extends Adventurer> party,  // Try javac with List<Adventurer>!
+		String partyName
 	) {
 		System.out.printf("%s:%n", partyName);
 		party.forEach(Adventurer::introduce);
