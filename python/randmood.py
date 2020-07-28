@@ -31,7 +31,7 @@ def generatorA(p: float) -> Iterator[float]:
 	The nth element of the stream (starting from zero) corresponds to the
 	probability of being happy after n seconds.
 	"""
-	happy = 1  # Probability of being happy.
+	happy: float = 1  # Probability of being happy.
 	while True:
 		yield happy
 		stay = happy * (1 - p)  # Probability of staying when happy.
