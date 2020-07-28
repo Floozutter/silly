@@ -8,6 +8,7 @@ happy after n seconds?"
 """
 
 from random import random
+from itertools import islice
 from typing import Iterator
 
 
@@ -24,17 +25,24 @@ def simulate(trials: int, n: int, p: float) -> float:
 	return happies/trials
 
 
-def solutionA(n: int, p: float) -> float:
+def generatorA(p: float) -> Iterator[float]:
 	"""
-	A simple solution that iterates over a single value in a loop.
-	(The first solution I thought of.)
+	Returns an infinite stream of probabilities.
+	The nth element of the stream (starting from zero) corresponds to the
+	probability of being happy after n seconds.
 	"""
 	happy = 1  # Probability of being happy.
-	for _ in range(n):
+	while True:
+		yield happy
 		stay = happy * (1 - p)  # Probability of staying when happy.
 		flip = (1 - happy) * p  # Probability of flipping when not happy.
 		happy = stay + flip
-	return happy
+
+def solutionA(n: int, p: float) -> float:
+	"""
+	The first solution I thought of.
+	"""
+	return next(islice(generatorA(p), n, None))
 
 
 if __name__ == "__main__":
