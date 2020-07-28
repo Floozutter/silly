@@ -24,5 +24,18 @@ def simulate(trials: int, n: int, p: float) -> float:
 	return happies/trials
 
 
+def solutionA(n: int, p: float) -> float:
+	"""
+	A simple solution that iterates over a single value in a loop.
+	(The first solution I thought of.)
+	"""
+	happy = 1  # Probability of being happy.
+	for _ in range(n):
+		stay = happy * (1 - p)  # Probability of staying when happy.
+		flip = (1 - happy) * p  # Probability of flipping when not happy.
+		happy = stay + flip
+	return happy
+
+
 if __name__ == "__main__":
 	pass
