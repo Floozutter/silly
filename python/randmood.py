@@ -26,7 +26,7 @@ def simulate(trials: int, n: int, p: float) -> float:
 	return happies/trials
 
 
-def generatorA(p: float) -> Iterator[float]:
+def generatorIterative(p: float) -> Iterator[float]:
 	"""
 	Returns an infinite stream of probabilities.
 	The nth element of the stream (starting from zero) corresponds to the
@@ -35,49 +35,34 @@ def generatorA(p: float) -> Iterator[float]:
 	happy: float = 1  # Probability of being happy.
 	while True:
 		yield happy
-		stay = happy * (1 - p)  # Probability of staying when happy.
-		flip = (1 - happy) * p  # Probability of flipping when not happy.
+		stay = (1 - p) * happy  # Probability of staying when happy.
+		flip = p * (1 - happy)  # Probability of flipping when not happy.
 		happy = stay + flip
 
-def solutionA(n: int, p: float) -> float:
+def solutionIterative(n: int, p: float) -> float:
 	"""
 	The first solution I thought of.
 	"""
-	return next(islice(generatorA(p), n, None))
+	return next(islice(generatorIterative(p), n, None))
 
 
-def solutionB(n: int, p: float) -> float:
+def solutionRecursive(n: int, p: float) -> float:
 	"""
 	Recursion!
+	The recurrence relation:
+		h[0] = 1,
+		h[n] = (1 - p) h[n-1] + p (1 - h[n-1]),
+		h[n] = (-2p + 1) h[n-1] + p.
 	"""
 	def recur(n: int, happy: float) -> float:
 		return happy if n == 0 else recur(n-1, (-2*p + 1)*happy + p)
 	return recur(n, 1)
 
 
-def solutionC(n: int, p: float) -> float:
+def solutionClosed(n: int, p: float) -> float:
 	"""
-	Reproduces a pattern in the expanded form of happy(n).
-	happy(0) = 1
-	happy(1) = 1 - p
-	happy(2) = 1 - 2*p + 2*p**2
-	happy(3) = 1 - 3*p + 6*p**2 - 4*p**3
-	happy(4) = 1 - 4*p + 12*p**2 - 16*p**3 + 8*p**4
-	happy(5) = 1 - 5*p + 20*p**2 - 40*p**3 + 40*p**4 - 16*p**5
-	happy(6) = 1 - 6*p + 30*p**2 - 80*p**3 + 120*p**4 - 96*p**5 + 32*p**6
-	"""
-	def falling_factorial(start: int, factors: int) -> int:
-		return prod(range(start, start-factors, -1))
-	def term(i: int) -> float:
-		sign = 1 if i % 2 == 0 else -1
-		coef = max(1, 2**(i-1)) / factorial(i)
-		return sign * coef * falling_factorial(n, i) * p**i
-	return sum(map(term, range(n+1)))
-
-
-def solutionD(n: int, p: float) -> float:
-	"""
-	A closed-form solution to the recurrence relation in solutionB.
+	A closed-form solution to solutionRecursive's recurrence relation.
+	Derivation:
 	Let q = (-2p + 1).
 		h[0] = 1,
 		h[n] = q h[n-1] + p.
@@ -92,6 +77,26 @@ def solutionD(n: int, p: float) -> float:
 		h[n] = ((-2p + 1)^n + 1)/2.
 	"""
 	return ((-2*p + 1)**n + 1)/2
+
+
+def solutionImitative(n: int, p: float) -> float:
+	"""
+	Reproduces a pattern in the expanded form of h[n]:
+		h[0] = 1,
+		h[1] = 1 - p,
+		h[2] = 1 - 2p + 2p^2,
+		h[3] = 1 - 3p + 6p^2 - 4p^3,
+		h[4] = 1 - 4p + 12p^2 - 16p^3 + 8p^4,
+		h[5] = 1 - 5p + 20p^2 - 40p^3 + 40p^4 - 16p^5,
+		h[6] = 1 - 6p + 30p^2 - 80p^3 + 120p^4 - 96p^5 + 32p^6.
+	"""
+	def falling_factorial(start: int, factors: int) -> int:
+		return prod(range(start, start-factors, -1))
+	def term(i: int) -> float:
+		sign = 1 if i % 2 == 0 else -1
+		coef = max(1, 2**(i-1)) / factorial(i)
+		return sign * coef * falling_factorial(n, i) * p**i
+	return sum(map(term, range(n+1)))
 
 
 if __name__ == "__main__":
