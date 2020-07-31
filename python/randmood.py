@@ -54,5 +54,20 @@ def solutionB(n: int, p: float) -> float:
 	return recur(n, 1)
 
 
+def solutionC(n: int, p: float) -> float:
+	"""
+	Searching for a pattern...
+	"""
+	if   n == 0: return 1
+	elif n == 1: return 1 - p
+	elif n == 2: return 1 - 2*p + 2*p**2
+	elif n == 3: return 1 - 3*p + 6*p**2 - 4*p**3
+	elif n == 4: return 1 - 4*p + 12*p**2 - 16*p**3 + 8*p**4
+	elif n == 5: return 1 - 5*p + 20*p**2 - 40*p**3 + 40*p**4 - 16*p**5
+	elif n == 6: return 1 - 6*p + 30*p**2 - 80*p**3 + 120*p**4 - 96*p**5 + 32*p**6
+	else:
+		return -1
+
+
 if __name__ == "__main__":
 	pass
