@@ -8,6 +8,7 @@ happy after n seconds?"
 """
 
 from random import random
+from math import prod, factorial
 from itertools import islice
 from typing import Iterator
 
@@ -56,17 +57,22 @@ def solutionB(n: int, p: float) -> float:
 
 def solutionC(n: int, p: float) -> float:
 	"""
-	Searching for a pattern...
+	Reproduces a pattern in the expanded form of happy(n).
+	happy(0) = 1
+	happy(1) = 1 - p
+	happy(2) = 1 - 2*p + 2*p**2
+	happy(3) = 1 - 3*p + 6*p**2 - 4*p**3
+	happy(4) = 1 - 4*p + 12*p**2 - 16*p**3 + 8*p**4
+	happy(5) = 1 - 5*p + 20*p**2 - 40*p**3 + 40*p**4 - 16*p**5
+	happy(6) = 1 - 6*p + 30*p**2 - 80*p**3 + 120*p**4 - 96*p**5 + 32*p**6
 	"""
-	if   n == 0: return 1
-	elif n == 1: return 1 - p
-	elif n == 2: return 1 - 2*p + 2*p**2
-	elif n == 3: return 1 - 3*p + 6*p**2 - 4*p**3
-	elif n == 4: return 1 - 4*p + 12*p**2 - 16*p**3 + 8*p**4
-	elif n == 5: return 1 - 5*p + 20*p**2 - 40*p**3 + 40*p**4 - 16*p**5
-	elif n == 6: return 1 - 6*p + 30*p**2 - 80*p**3 + 120*p**4 - 96*p**5 + 32*p**6
-	else:
-		return -1
+	def falling_factorial(start: int, factors: int) -> int:
+		return prod(range(start, start-factors, -1))
+	def term(i: int) -> float:
+		sign = 1 if i % 2 == 0 else -1
+		coef = max(1, 2**(i-1)) / factorial(i)
+		return sign * coef * falling_factorial(n, i) * p**i
+	return sum(map(term, range(n+1)))
 
 
 if __name__ == "__main__":
