@@ -51,7 +51,7 @@ def solutionB(n: int, p: float) -> float:
 	Recursion!
 	"""
 	def recur(n: int, happy: float) -> float:
-		return happy if n == 0 else recur(n-1, (1 - 2*p)*happy + p)
+		return happy if n == 0 else recur(n-1, (-2*p + 1)*happy + p)
 	return recur(n, 1)
 
 
@@ -73,6 +73,25 @@ def solutionC(n: int, p: float) -> float:
 		coef = max(1, 2**(i-1)) / factorial(i)
 		return sign * coef * falling_factorial(n, i) * p**i
 	return sum(map(term, range(n+1)))
+
+
+def solutionD(n: int, p: float) -> float:
+	"""
+	A closed-form solution to the recurrence relation in solutionB.
+	Let q = (-2p + 1).
+		h[0] = 1,
+		h[n] = q h[n-1] + p.
+	By iterating,
+		h[1] = q + p,
+		h[2] = q (q + p) + p = q^2 + pq + p,
+		h[3] = q (q^2 + pq + p) + p = q^3 + pq^2 + pq + p,
+		h[n] = q^n + p(q^(n-1) + q^(n-2) + ... + q^0).
+	Because the term p(q^(n-1) + q^(n-2) + ... + q^0) is a geometric series,
+		h[n] = q^n + p(1 - q^n)/(1 - q).
+	Substituting q = (-2p + 1) and simplifying,
+		h[n] = ((-2p + 1)^n + 1)/2.
+	"""
+	return ((-2*p + 1)**n + 1)/2
 
 
 if __name__ == "__main__":
