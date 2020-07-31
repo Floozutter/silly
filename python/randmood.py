@@ -51,7 +51,7 @@ def solutionB(n: int, p: float) -> float:
 	Recursion!
 	"""
 	def recur(n: int, happy: float) -> float:
-		return happy if n == 0 else recur(n-1, happy*(1-p) + (1-happy)*p)
+		return happy if n == 0 else recur(n-1, (1 - 2*p)*happy + p)
 	return recur(n, 1)
 
 
