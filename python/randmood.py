@@ -51,8 +51,7 @@ def solutionRecursive(n: int, p: float) -> float:
 	Recursion!
 	The recurrence relation:
 		h[0] = 1,
-		h[n] = (1 - p) h[n-1] + p (1 - h[n-1]),
-		h[n] = (-2p + 1) h[n-1] + p.
+		h[n] = (1 - p) h[n-1] + p (1 - h[n-1]) = (-2p + 1) h[n-1] + p.
 	"""
 	def recur(n: int, happy: float) -> float:
 		return happy if n == 0 else recur(n-1, (-2*p + 1)*happy + p)
