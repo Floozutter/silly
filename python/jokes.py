@@ -40,7 +40,3 @@ def how_are_you(
     Returns an answer to the question "How are you?" using your current state.
     """
     return "Okay."
-
-
-
-
