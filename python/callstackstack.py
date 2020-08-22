@@ -7,7 +7,7 @@ http://justinjaffray.com/reflections-on-stacking-stacks/
 
 from collections import deque
 from enum import Enum
-from typing import Dict, List, Tuple, Sequence, Optional
+from typing import Deque, Dict, List, Tuple, Sequence, Optional, TypeVar
 
 
 class Bracket(Enum):
@@ -33,7 +33,7 @@ PAIRS: Dict[Bracket, Bracket] = {
 
 def balancedA(brackets: Sequence[Bracket]) -> bool:
 	"""Uses a collections.deque as a stack."""
-	stack = deque()
+	stack: Deque[Bracket] = deque()
 	for b in brackets:
 		if b in PAIRS:
 			stack.append(b)
@@ -41,13 +41,18 @@ def balancedA(brackets: Sequence[Bracket]) -> bool:
 			return False
 	return not stack
 
-def balancedB(brackets: Sequence[Bracket], stack: Sequence[Bracket] = ()) -> bool:
+T = TypeVar("T")
+SinglyLinkedList = Optional[Tuple[T, "SinglyLinkedList"]]
+def balancedB(
+	brackets: Sequence[Bracket],
+	stack: SinglyLinkedList[Bracket] = None
+)-> bool:
 	"""Uses a singly linked list parameter as a stack."""
 	if not brackets:
 		return not stack
 	elif brackets[0] in PAIRS:
 		return balancedB(brackets[1:], (brackets[0], stack))
-	elif stack and brackets[0] == PAIRS[stack[0]]:
+	elif stack is not None and brackets[0] == PAIRS[stack[0]]:
 		return balancedB(brackets[1:], stack[1])
 	else:
 		return False
