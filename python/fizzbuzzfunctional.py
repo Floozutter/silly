@@ -1,54 +1,52 @@
 """
 An extensible solution to the FizzBuzz problem, in a functional style.
-
 https://en.wikipedia.org/wiki/Fizz_buzz
+
+Updated using Maciej Piróg's "FizzBuzz in Haskell by Embedding a
+Domain-Specific Language"!
+https://themonadreader.files.wordpress.com/2014/04/fizzbuzz.pdf
 """
 
-from typing import Callable, NamedTuple, Iterable
+from functools import reduce
+from typing import NamedTuple, Callable, Iterable
 
 
-IntChecker = Callable[[int], bool]  # checks if an integer passes a condition
-IntNamer   = Callable[[int], str]   # names an integer by some rules
-class Rule(NamedTuple):             # associates a subname to a condition
-    subname: str
-    condition: IntChecker 
+class Rule(NamedTuple):
+	subname: str
+	predicate: Callable[[int], bool]
 
 
-def make_namer(rules: Iterable[Rule]) -> IntNamer:
-    """
-    Returns an IntNamer closure from an Iterable of Rules.
-
-    The IntNamer will name an integer as a concatenation of every valid
-    subname it fulfills from the Iterable of Rules.
-    
-    The order of the subnames in an int's full name corresponds to the order
-    of the Rules in the Iterable.
-    """
-    
-    def namer(z: int) -> str:
-        """
-        Names the integer argument using the bound Iterable of Rules.
-        """
-        # make the full name from the subnames the integer fulfills
-        name = "".join(r.subname for r in rules if r.condition(z))
-        
-        if name:  # the integer fulfills at least one subname
-            return name
-        
-        # when the integer fulfills no subnames,
-        # just name the integer by its value instead
-        return str(z)
-    
-    return namer
+def make_namer(rules: Iterable[Rule]) -> Callable[[int], str]:
+	"""
+	Returns a namer constructed from the given rules.
+	The namer will name an integer as a concatenation of every valid subname
+	it fulfills from the rules. The order of the subnames corresponds to the
+	order of the rules in the Iterable. However, if no subnames were
+	fulfilled, the namer will default to naming the integer by its string
+	value instead.
+	"""
+	def namer(z: int) -> str:
+		"""Names the integer argument using the bound rules."""
+		def test(rule: Rule, f: Callable[[str], str]) -> Callable[[str], str]:
+			if rule.predicate(z):
+				return lambda _: rule.subname + f("")
+			else:
+				return f
+		return reduce(
+			lambda f, g: lambda x: f(g(x)),
+			map(
+				lambda rule: lambda f: test(rule, f),
+				rules
+			)
+		)(lambda s: s)(str(z))
+	return namer
 
 
 if __name__ == "__main__":
-    # make the classic FizzBizz namer
-    fizzbuzz = make_namer((
-        Rule("Fizz", lambda z: z % 3 == 0),
-        Rule("Buzz", lambda z: z % 5 == 0)
-    ))
-
-    # name the integers within the range [1, 100] with fizzbuzz, then print
-    for name in map(fizzbuzz, range(1, 101)):
-        print(name)
+	fizzbuzz = make_namer((
+		Rule("Fizz", lambda z: z % 3 == 0),
+		Rule("Buzz", lambda z: z % 5 == 0)
+	))
+	
+	for name in map(fizzbuzz, range(0, 100)):
+		print(name)
