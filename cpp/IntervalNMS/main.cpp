@@ -5,6 +5,7 @@
 
 #include <vector>
 #include <forward_list>
+#include <numeric>
 #include <algorithm>
 #include <iostream>
 
@@ -29,12 +30,10 @@ std::vector<Interval> suppress_nonmax(
 	double iou_threshold
 ) {
 	std::vector<Interval> output;
-	std::forward_list<std::vector<Interval>::size_type> indices;
+	std::forward_list<std::vector<Interval>::size_type> indices(input.size());
 	
 	// Populate indices with the indices of the input vector.
-	for (std::vector<Interval>::size_type i{0}; i < input.size(); i++) {
-		indices.push_front(i);
-	}
+	std::iota(indices.begin(), indices.end(), 0);
 	// Sort indices by descending confidence.
 	indices.sort([&input](auto a, auto b) -> bool {
 		return input[a].confidence > input[b].confidence;
