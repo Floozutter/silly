@@ -33,6 +33,9 @@ int main() {
 	assert(CloserOf<'<'>::value == '>');
 	assert(CloserOf<'>'>::value == '\0');
 	assert(CloserOf<'e'>::value == '\0');
+	assert(OpenerOf<'}'>::value == '{');
+	assert(OpenerOf<'{'>::value == '\0');
+	assert(OpenerOf<'e'>::value == '\0');
 	
 	return 0;
 }
