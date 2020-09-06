@@ -29,6 +29,11 @@ ADD_BRACKET_PAIR('[', ']')
 #undef ADD_BRACKET_PAIR
 
 
+bool is_opener(char c) {
+	return CloserOf<c>::value != '\0';
+}
+
+
 int main() {
 	assert(CloserOf<'<'>::value == '>');
 	assert(CloserOf<'>'>::value == '\0');
