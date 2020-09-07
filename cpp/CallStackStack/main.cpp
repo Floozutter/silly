@@ -9,38 +9,49 @@
 #include <assert.h>
 
 
-template <char> struct CloserOf {
-	static constexpr char value = '\0';
+template <char l, char r>
+struct BracketPair {
+	static constexpr char opener = l;
+	static constexpr char closer = r;
 };
-template <char> struct OpenerOf {
-	static constexpr char value = '\0';
+
+template<typename... Args>
+class Brackets {
+	public:
+		static constexpr char closer_of(char c) {
+			return '\0';
+		}
+		static constexpr char opener_of(char c) {
+			return '\0';
+		}
 };
-#define ADD_BRACKET_PAIR(opener, closer) \
-	template <> struct CloserOf<opener> { \
-		static constexpr char value = closer; \
-	}; \
-	template <> struct OpenerOf<closer> { \
-		static constexpr char value = opener; \
-	};
-ADD_BRACKET_PAIR('<', '>')
-ADD_BRACKET_PAIR('{', '}')
-ADD_BRACKET_PAIR('(', ')')
-ADD_BRACKET_PAIR('[', ']')
-#undef ADD_BRACKET_PAIR
+template<typename T, typename... Args>
+class Brackets<T, Args...> {
+	using super = Brackets<Args...>;
+	public:
+		static constexpr char closer_of(char c) {
+			return c == T::opener ? T::closer : super::closer_of(c);
+		}
+		static constexpr char opener_of(char c) {
+			return c == T::closer ? T::opener : super::opener_of(c);
+		}
+};
 
-
-bool is_opener(char c) {
-	return CloserOf<c>::value != '\0';
-}
+using CommonBrackets = Brackets<
+	BracketPair<'<', '>'>,
+	BracketPair<'{', '}'>,
+	BracketPair<'(', ')'>,
+	BracketPair<'[', ']'>
+>;
 
 
 int main() {
-	assert(CloserOf<'<'>::value == '>');
-	assert(CloserOf<'>'>::value == '\0');
-	assert(CloserOf<'e'>::value == '\0');
-	assert(OpenerOf<'}'>::value == '{');
-	assert(OpenerOf<'{'>::value == '\0');
-	assert(OpenerOf<'e'>::value == '\0');
+	assert(CommonBrackets::closer_of('<') == '>');
+	assert(CommonBrackets::closer_of('>') == '\0');
+	assert(CommonBrackets::closer_of('e') == '\0');
+	assert(CommonBrackets::opener_of('}') == '{');
+	assert(CommonBrackets::opener_of('{') == '\0');
+	assert(CommonBrackets::opener_of('e') == '\0');
 	
 	return 0;
 }
