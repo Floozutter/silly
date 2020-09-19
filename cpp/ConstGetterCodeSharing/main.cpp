@@ -13,7 +13,7 @@ template <typename T>
 class Wrapper {
 	public:
 		// Wrappers must be initialized. (Avoid uninitialized const Wrappers.)
-		Wrapper(T value) : value{value}, counter{0} {}
+		Wrapper(T value) : value{value} {}
 		Wrapper() = delete;
 		// Disable copying. (Should the counter be copied? Ambiguous.)
 		Wrapper(Wrapper const &) = delete;
@@ -32,7 +32,7 @@ class Wrapper {
 		}
 	private:
 		T value;
-		unsigned int mutable counter;
+		unsigned int mutable counter = 0;
 };
 
 int main() {
