@@ -38,7 +38,7 @@ class Wrapper {
 int main() {
 	Wrapper<int> a{999999};
 	a.get() = 142857;
-	const Wrapper<int> b{7};
+	Wrapper<int> const b{7};
 	
 	std::cout << "Wrapper a has: " << a.get() << std::endl;
 	std::cout << "Wrapper b has: " << b.get() << std::endl;
