@@ -27,5 +27,14 @@ int main() {
 		std::cout << grid[row + dr[i]][col + dc[i]] << std::endl;
 	}
 	
+	std::cout << "Coordinate difference array:" << std::endl;
+	struct {
+		int row;
+		int col;
+	} const dco[] = {{1, 0}, {0, 1}, {-1, 0}, {0, -1}};
+	for (size_t i = 0; i < 4; ++i) {
+		std::cout << grid[row + dco[i].row][col + dco[i].col] << std::endl;
+	}
+	
 	return 0;
 }
