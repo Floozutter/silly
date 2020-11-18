@@ -1,0 +1,4 @@
+# pdflatex stuff.
+*.aux
+*.log
+*.pdf
