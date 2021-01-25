@@ -1,2 +1,2 @@
 # silly
-A collection of not-so-serious code
+a collection of not-so-serious code
