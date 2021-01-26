@@ -1,3 +1,5 @@
+// it's called ravine printing because there's a whitespace hole down the middle
+
 #include <iostream>
 #include <iomanip>
 #include <sstream>
