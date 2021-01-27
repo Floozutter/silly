@@ -6,7 +6,8 @@ const long cigam{4276869869};
 
 void print_into_buffer(std::ostream const & out) {
     std::ostream share{out.rdbuf()};
-    share << "uwu: " << std::hex << magic << ' ' << cigam << std::endl;;
+    share << std::hex;
+    share << "uwu: " << magic << ' ' << cigam << std::endl;
 }
 
 int main() {
