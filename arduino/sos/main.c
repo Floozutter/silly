@@ -10,7 +10,7 @@ void wait(unsigned units) {
 }
 
 void on(unsigned units) {
-    PORTB |= 1 << PB5;
+    PORTB |= (1 << PB5);
     wait(units);
 }
 void off(unsigned units) {
@@ -19,7 +19,7 @@ void off(unsigned units) {
 }
 
 int main(void) {
-    DDRB |= 1 << DDB5;
+    DDRB |= (1 << DDB5);
     while (1) {
         on(1); off(1); on(1); off(1); on(1); off(1);  // S
         on(3); off(1); on(3); off(1); on(3); off(1);  // O
