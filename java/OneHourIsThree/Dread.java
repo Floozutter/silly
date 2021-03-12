@@ -16,7 +16,7 @@ public class Dread {
             return "owo";
         }
         public void printMe() {
-            System.out.println("berived: " + toString());
+            System.out.println("derived: " + toString());
         }
         public void foo() {
             super.printMe();
