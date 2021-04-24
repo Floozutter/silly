@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>any-key</title>
+    <script src="https://cdn.jsdelivr.net/gh/jspsych/jsPsych@6.3.1/jspsych.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/jspsych/jsPsych@6.3.1/plugins/jspsych-html-keyboard-response.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jspsych/jsPsych@6.3.1/css/jspsych.min.css">
+</head>
+<body>
+    <script>
+        jsPsych.init({
+            timeline: [
+                {
+                    type: "html-keyboard-response",
+                    stimulus: "<i>Press any key to continue.</i>"
+                }
+            ],
+            on_finish: () => {
+                const key = jsPsych.data.getLastTrialData().values()[0].response;
+                jsPsych.getDisplayElement().innerHTML = `
+                    wow, out of all the keys you could press, you pressed <b>${
+                        key == " " ? "space" : key
+                    }</b>? <br>
+                    unbelievable. what a fucking loser.
+                `
+            }
+        })
+    </script>
+</body>
+</html>
