@@ -12,7 +12,7 @@ fn adapted(string: &str, old: &str, new: &str) -> (String, usize) {
         result.push_str(string.get(last_end..start).unwrap());
         result.push_str(new);
         last_end = start + part.len();
-        count = count + 1;
+        count += 1;
     }
     result.push_str(string.get(last_end..string.len()).unwrap());
     (result, count)
