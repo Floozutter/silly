@@ -5,6 +5,7 @@ use coin flips to choose who dodges!
 import random
 import math
 from enum import Enum
+from typing import AbstractSet
 
 class CoinFlip(Enum):
     TAILS = "0"
@@ -13,7 +14,7 @@ class CoinFlip(Enum):
 def flip_coin() -> CoinFlip:
     return CoinFlip.HEADS if random.getrandbits(1) else CoinFlip.TAILS
 
-def choose_who_dodges(players: frozenset[str]) -> str:
+def choose_who_dodges(players: AbstractSet[str]) -> str:
     # start by enumerating all the players with indices (for n players, number them from 0 to n-1)
     n = len(players)
     enumerated_players = tuple(players)
