@@ -1,7 +1,6 @@
 import math
-import itertools
 import functools
-from typing import NamedTuple, Iterable, Sequence
+from typing import Any, NamedTuple, Sequence
 
 class Point(NamedTuple):
     x: float
@@ -10,11 +9,18 @@ class Point(NamedTuple):
         return math.sqrt(self.x**2 + self.y**2)
     def __mul__(self, other: float) -> "Point":
         return Point(other * self.x, other * self.y)
-    def __add__(self, other: "Point") -> "Point":
+    def __add__(self, other: Any) -> "Point":
+        if not isinstance(other, Point): raise ValueError("oops")
         return Point(self.x + other.x, self.y + other.y)
     def __sub__(self, other: "Point") -> "Point":
         return Point(self.x - other.x, self.y - other.y)
 
+def angle_abc(a: Point, b: Point, c: Point) -> float:
+    ba = a - b
+    bc = c - b
+    dx = (bc.x*ba.x + bc.y*ba.y) / ba.norm()
+    dy = (bc.y*ba.x - bc.x*ba.y) / ba.norm()
+    return math.atan2(dy, dx)
 
 class Triangle(NamedTuple):
     a: Point
@@ -32,7 +38,7 @@ class Triangle(NamedTuple):
 
 class ConvexHull:
     vertices: tuple[Point, ...]
-    _angles: float
+    _angles: tuple[float, ...]
     _mean: Point
     def __init__(self, vertices: Sequence[Point]):
         if len(vertices) < 3:
@@ -54,35 +60,19 @@ class ConvexHull:
             enumerate(self._angles),
             key = lambda pair: abs(angle - pair[1])
         )[0]
-        # search for counterclockwise-adjacent vertex
+        # search for counterclockwise-adjacent vertex's concave angle
         i = closest_index
-        while True:
-            a, b, c = point, self.vertices[i], self.vertices[(i + 1) % len(self.vertices)]
-            ba = a - b
-            bc = c - b
-            dx = (bc.x*ba.x + bc.y*ba.y) / ba.norm()
-            dy = (bc.y*ba.x - bc.x*ba.y) / ba.norm()
-            alpha = math.atan2(dy, dx)
-            if alpha < 0:
-                break
-            i = (i + 1) % len(self.vertices)
-        # search for clockwise-adjacent vertex
+        while angle_abc(point, self.vertices[i], self.vertices[(i+1) % len(self.vertices)]) >= 0:
+            i = (i+1) % len(self.vertices)
+        # search for clockwise-adjacent vertex's concave angle
         j = closest_index
-        while True:
-            a, b, c = point, self.vertices[j], self.vertices[(j - 1) % len(self.vertices)]
-            ba = a - b
-            bc = c - b
-            dx = (bc.x*ba.x + bc.y*ba.y) / ba.norm()
-            dy = (bc.y*ba.x - bc.x*ba.y) / ba.norm()
-            beta = math.atan2(dy, dx)
-            if beta > 0:
-                break
-            j = (j - 1) % len(self.vertices)
-        # build vertices
+        while angle_abc(point, self.vertices[j], self.vertices[(j-1) % len(self.vertices)]) <= 0:
+            j = (j-1) % len(self.vertices)
+        # stitch together vertices
         vs = [point]
         while i != j:
             vs.append(self.vertices[i])
-            i = (i + 1) % len(self.vertices)
+            i = (i+1) % len(self.vertices)
         vs.append(self.vertices[i])
         return ConvexHull(vs)
     def contains(self, point: Point) -> bool:
@@ -118,8 +108,7 @@ if __name__ == "__main__":
     # plot points
     ax.scatter(*zip(*points), c = "blue")
     # plot convex hull
-    vertices = chull.vertices
-    closed = (*vertices, vertices[0])
+    closed = (*chull.vertices, chull.vertices[0])
     ax.plot(*zip(*closed), c = "red")
     # display plot
     plt.show()
