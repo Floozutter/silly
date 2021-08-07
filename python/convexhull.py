@@ -1,6 +1,6 @@
 import math
 import functools
-from typing import Any, NamedTuple, Sequence
+from typing import Any, Optional, NamedTuple, Sequence
 
 class Point(NamedTuple):
     x: float
@@ -91,15 +91,24 @@ class ConvexHull:
         return chull
 
 
-if __name__ == "__main__":
+def parse_args() -> tuple[int, Optional[str]]:
+    import argparse
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--interval", type = int, default = 500)
+    parser.add_argument("--seed", type = str, default = None)
+    args = parser.parse_args()
+    return args.interval, args.seed
+
+def main(interval: int, seed: Optional[str]) -> None:
     import matplotlib.pyplot
     import matplotlib.animation
     import numpy
     import random
     # generate points
+    r = random.Random(seed)
     points = tuple(
-        Point(random.random(), random.random()) * 100
-        for _ in range(random.randrange(7, 51))
+        Point(r.random(), r.random()) * 100
+        for _ in range(r.randrange(7, 51))
     )
     # set up plot
     fig = matplotlib.pyplot.figure()
@@ -125,7 +134,10 @@ if __name__ == "__main__":
         fig,
         update,
         frames = range(len(points) + 1),
-        interval = 500,
+        interval = interval,
         blit = True
     )
     matplotlib.pyplot.show()
+
+if __name__ == "__main__":
+    main(*parse_args())
