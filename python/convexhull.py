@@ -90,25 +90,42 @@ class ConvexHull:
             chull = chull.including(p)
         return chull
 
+
 if __name__ == "__main__":
-    import matplotlib.pyplot as plt
+    import matplotlib.pyplot
+    import matplotlib.animation
+    import numpy
     import random
     # generate points
     points = tuple(
         Point(random.random(), random.random()) * 100
         for _ in range(random.randrange(7, 51))
     )
-    # get convex hull
-    chull = ConvexHull.from_points(points)
     # set up plot
-    fig = plt.figure()
+    fig = matplotlib.pyplot.figure()
     ax = fig.add_subplot(1, 1, 1)
     ax.set_xlim(-50, 150)
     ax.set_ylim(-50, 150)
-    # plot points
     ax.scatter(*zip(*points), c = "blue")
-    # plot convex hull
-    closed = (*chull.vertices, chull.vertices[0])
-    ax.plot(*zip(*closed), c = "red")
-    # display plot
-    plt.show()
+    line ,= ax.plot((), (), c = "red")
+    included = ax.scatter((), (), c = "red")
+    remaining = ax.scatter((), (), c = "blue")
+    # animate plot
+    def update(i: int):
+        if i < 3:
+            line.set_data((), ())
+        else:
+            chull = ConvexHull.from_points(points[:i])
+            closed = (*chull.vertices, chull.vertices[0])
+            line.set_data(*zip(*closed))
+        included.set_offsets(points[:i] or numpy.empty(shape = (0, 2)))
+        remaining.set_offsets(points[i:] or numpy.empty(shape = (0, 2)))
+        return line, included, remaining
+    ani = matplotlib.animation.FuncAnimation(
+        fig,
+        update,
+        frames = range(len(points) + 1),
+        interval = 500,
+        blit = True
+    )
+    matplotlib.pyplot.show()
